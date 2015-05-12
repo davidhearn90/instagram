@@ -4,8 +4,8 @@
  ini_set("default_socket_timeout", 300);
  session_start();
 //make constants using define
-define('client_ID', '8c8b323d7d494c0ba038030f9b40d7a4');
-define('client_ecret', 'fde357320b494c5793ada5433a32c741');
+define('clientID', '8c8b323d7d494c0ba038030f9b40d7a4');
+define('clientSecret', 'fde357320b494c5793ada5433a32c741');
 define("redirectURI", "http://localhost/appacademyapi/index.php");
 define('ImageDirectory', 'pics/');
 
@@ -19,7 +19,15 @@ if (isset($_GET['code'])){
 		'code'=> $code
 		);
 }
-
+//cURL is what we use in php its a library that call to other API's
+	$curl = curl_init($url); 
+	curl_setopt($curl, CURLOPT_POST, true);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $access_token_settings);  //setting the POSTFIELDS to the array set up that we have created.
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+};
+$result= curl_exec($curl);
+curl_close();
  ?>
 
  <!DOCTYPE html>
@@ -28,7 +36,7 @@ if (isset($_GET['code'])){
  <meta charset="utf-8">
  <meta name="description" content="">
  <meta name="viewport" content="width=device-width, initial-scale=1">
- 	<title>Untitled</title>
+ 	<title>Instagram</title>
  	<link rel="stylesheet" type="text/css" href="css/style.css">
  	<link rel="author" href="humans.txt">
  </head>
