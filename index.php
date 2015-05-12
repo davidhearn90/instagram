@@ -8,6 +8,17 @@ define('client_ID', '8c8b323d7d494c0ba038030f9b40d7a4');
 define('client_ecret', 'fde357320b494c5793ada5433a32c741');
 define("redirectURI", "http://localhost/appacademyapi/index.php");
 define('ImageDirectory', 'pics/');
+
+	if isset(($_GET['code'])){
+	$code = ($_GET['code']);
+	$url = 'https://api.instagram.com/oauth/access_token';
+	$access_token_settings = array('cient_id' => clientID,
+		'client_secret' => clientSecret,
+		'grant_type'=>'authorization_code',
+		'redirect_uri'=> redirectURI,
+		'code'=> $code
+		);
+}
  ?>
 
  <!DOCTYPE html>
@@ -24,7 +35,7 @@ define('ImageDirectory', 'pics/');
  <!-- Creating a login for people to go and give approval for ourr web app to access their Instagram Account 
  After getting approval we are now going to have the information so that we can play with it.
  -->
- <a href="https:api.instagram.com/oauth/authorize/?client_id=<?php  echo client_ID; ?>&redireect_uri=<?php echo redirectURI ?>&response_type=code">Login</a>
+ <a href="https:api.instagram.com/oauth/authorize/?client_id=<?php  echo client_ID; ?>&redirect_uri=<?php echo redirectURI ?>&response_type=code">Login</a>
  <script src="js/main.js"></script>
  </body>
  </html>
