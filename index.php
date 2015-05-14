@@ -8,7 +8,6 @@ define('clientID', '8c8b323d7d494c0ba038030f9b40d7a4');
 define('clientSecret', 'fde357320b494c5793ada5433a32c741');
 define("redirectURI", "http://localhost/appacademyapi/index.php");
 define('ImageDirectory', 'pics/');
-
 //fucntion that is going to connect to instagram
  function connectToInstagram($url){
  	$ch = curl_init();
@@ -29,6 +28,21 @@ define('ImageDirectory', 'pics/');
  	$results = json_decode($instagramInfo, true);
  	echo $results['data']['0']['id'];
  }
+// function to print out images onto screen
+ function printImages($userID){
+ 	$url = 'http://api.instagram.com/v1/users/'.$userID.'/media/recent?client_id'.clientID.'&count=5';
+ 	$instagramInfo = connectToInstagram($url);
+ 	$results = json_decode($instagramInfo, true);
+ 	// parse through the information
+ 	foreach ($results['date'] as $item ) {
+ 		$image_url = $items['images']['low_resolution']['url'];
+ 		echo '<img src="'.$image_url.'"/><br/>';
+savePictures($image_url);
+ 	}
+ }
+
+
+
 if (isset($_GET['code'])){
 	$code = ($_GET['code']);
 	$url = 'https://api.instagram.com/oauth/access_token';
@@ -44,11 +58,13 @@ if (isset($_GET['code'])){
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $access_token_settings);  //setting the POSTFIELDS to the array set up that we have created.
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
 $result = curl_exec($curl);
 curl_close($curl);	
 $results = json_decode($result, true);
-getUserID($results['user']['username']);
+
+$userName = $results['user']['username'];
+
+$userID = getUserID($userName);
 } 
 else {
  ?>
